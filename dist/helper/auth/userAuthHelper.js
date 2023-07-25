@@ -30,6 +30,7 @@ const doRegister = (data) => {
                     username: newUser.username,
                     email: newUser.email,
                     phoneNo: newUser.phoneNo,
+                    status: newUser.status
                 };
                 //JWT Authentication
                 const accessToken = jsonwebtoken_1.default.sign(userData, process.env.JWT_KEY, { expiresIn: '1d' });
@@ -61,7 +62,8 @@ const doLogin = (data) => {
                             id: user._id,
                             email: user.email,
                             username: user.username,
-                            phoneNo: user.phoneNo
+                            phoneNo: user.phoneNo,
+                            status: user.status
                         };
                         const accessToken = jsonwebtoken_1.default.sign(userData, process.env.JWT_KEY, { expiresIn: '1d' });
                         resolve({ userData, accessToken });

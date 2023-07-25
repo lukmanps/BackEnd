@@ -20,6 +20,7 @@ export const doRegister = (data: userDetails) => {
                     username: newUser.username,
                     email: newUser.email,
                     phoneNo: newUser.phoneNo,
+                    status: newUser.status
                 }
 
                 //JWT Authentication
@@ -54,7 +55,8 @@ export const doLogin = (data: { email: string, password: string }) => {
                             id: user._id,
                             email : user.email,
                             username: user.username,
-                            phoneNo: user.phoneNo
+                            phoneNo: user.phoneNo,
+                            status: user.status
                         }
                         const accessToken = jwt.sign(userData, process.env.JWT_KEY as Secret, { expiresIn: '1d' });
                         resolve({ userData, accessToken });
