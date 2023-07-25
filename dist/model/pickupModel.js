@@ -3,17 +3,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.pickupCollection = exports.pickupSchema = void 0;
 const mongoose_1 = require("mongoose");
 exports.pickupSchema = new mongoose_1.Schema({
-    userId: String,
-    scrap: [
-        {
-            type: String,
-            required: true
-        }
-    ],
+    user: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: 'user'
+    },
+    scrap: [String],
     formData: {
-        type: Number,
+        name: String,
+        email: String,
+        phoneNo: String,
+        address1: String,
+        address2: String,
+        locality: String,
+        pin: String,
+    },
+    timeSlot: {
+        type: String,
         required: true
     },
-    timeSchedule: String,
 });
-exports.pickupCollection = (0, mongoose_1.model)('scrap', exports.pickupSchema);
+exports.pickupCollection = (0, mongoose_1.model)('pickup', exports.pickupSchema);

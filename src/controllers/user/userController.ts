@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { doSellScrap } from "../../helper/user/userHelper";
 
 export interface selectedData {
+    userId: string,
     scrap: string[],
     formData: {
         name: string,
@@ -12,13 +13,11 @@ export interface selectedData {
         locality: string,
         pin: string
     },
-    timeSlot: string,
-    userId: string
+    timeSlot: string
 }
 
 export const sellScrap = (req: Request, res: Response) => {
     try{
-        console.log(req.body);
         const data: selectedData = req.body
 
         doSellScrap(data)

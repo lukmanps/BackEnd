@@ -1,22 +1,25 @@
-import mongoose, {Schema, model} from "mongoose";
+import { Schema, model } from "mongoose";
 
 export const pickupSchema = new Schema({
 
-    userId: String,
-
-    scrap: [
-        {
-            type: String,
-            required: true
-        }
-    ],
-
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'user'
+    },
+    scrap: [String],
     formData: {
-        type: Number,
+        name: String,
+        email: String,
+        phoneNo: String,
+        address1: String,
+        address2: String,
+        locality: String,
+        pin: String,
+    },
+    timeSlot: {
+        type: String,
         required: true
     },
-
-    timeSchedule: String,
 })
 
-export const pickupCollection = model('scrap', pickupSchema);
+export const pickupCollection = model('pickup', pickupSchema);
