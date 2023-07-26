@@ -21,5 +21,9 @@ exports.pickupSchema = new mongoose_1.Schema({
         type: String,
         required: true
     },
+    status: {
+        type: String,
+        default: 'Pending'
+    }
 });
 exports.pickupCollection = (0, mongoose_1.model)('pickup', exports.pickupSchema);

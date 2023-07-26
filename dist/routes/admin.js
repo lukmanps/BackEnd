@@ -7,6 +7,7 @@ const express_1 = __importDefault(require("express"));
 const adminAuthController_1 = require("../controllers/auth/adminAuthController");
 const adminController_1 = require("../controllers/admin/adminController");
 const scrapController_1 = require("../controllers/scrap/scrapController");
+const pickupController_1 = require("../controllers/admin/pickupController");
 const adminRouter = () => {
     const router = express_1.default.Router();
     router.post('/login', adminAuthController_1.adminLogin);
@@ -15,6 +16,7 @@ const adminRouter = () => {
     router.get('/view-user', adminController_1.userData);
     router.delete('/delete-user', adminController_1.deleteUser);
     router.post('/add-scrap', scrapController_1.addScrapMaterial);
+    router.get('/pickups', pickupController_1.pickupsList);
     return router;
 };
 exports.default = adminRouter;

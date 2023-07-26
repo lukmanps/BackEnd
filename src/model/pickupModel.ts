@@ -20,6 +20,10 @@ export const pickupSchema = new Schema({
         type: String,
         required: true
     },
+    status: {
+        type: String,
+        default: 'Pending'
+    }
 })
 
 export const pickupCollection = model('pickup', pickupSchema);

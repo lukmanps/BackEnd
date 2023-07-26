@@ -3,7 +3,7 @@ import { pickupCollection } from "../../model/pickupModel"
 
 export const doSellScrap = (data: selectedData) => {
     return new Promise((resolve, reject) => {
-        console.log(data, ' : Data in doSell scrap');
+        const date = new Date();
         
         pickupCollection.create(data)
         .then((response) => {
