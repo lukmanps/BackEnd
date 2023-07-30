@@ -7,7 +7,11 @@ exports.pickupSchema = new mongoose_1.Schema({
         type: mongoose_1.Schema.Types.ObjectId,
         ref: 'user'
     },
-    scrap: [String],
+    date: String,
+    scrap: [{
+            item: mongoose_1.Schema.Types.ObjectId,
+            quantity: Number
+        }],
     formData: {
         name: String,
         email: String,
@@ -18,8 +22,8 @@ exports.pickupSchema = new mongoose_1.Schema({
         pin: String,
     },
     timeSlot: {
-        type: String,
-        required: true
+        date: String,
+        time: String
     },
     status: {
         type: String,

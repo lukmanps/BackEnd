@@ -13,6 +13,7 @@ const userRouter = () => {
     router.get('/scrap-management', scrapList);
 
     router.post('/sell-scrap', sellScrap);
+    
      
     return router
 }

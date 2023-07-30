@@ -6,7 +6,11 @@ export const pickupSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'user'
     },
-    scrap: [String],
+    date: String,
+    scrap: [{
+        item: Schema.Types.ObjectId,
+        quantity: Number
+    }],
     formData: {
         name: String,
         email: String,
@@ -17,8 +21,8 @@ export const pickupSchema = new Schema({
         pin: String,
     },
     timeSlot: {
-        type: String,
-        required: true
+        date: String,
+        time: String
     },
     status: {
         type: String,
