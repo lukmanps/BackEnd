@@ -24,6 +24,7 @@
     "jsonwebtoken": "^9.0.1",
     "mongoose": "^7.3.2",
     "morgan": "^1.10.0",
+    "razorpay": "^2.9.1",
     "rimraf": "^5.0.1"
   },
   "devDependencies": {

@@ -1,6 +1,7 @@
 import express from "express";
 import {userSignup, userLogin} from "../controllers/auth/userAuthController";
 import { scrapList } from "../controllers/scrap/scrapController";
+import { sellScrap } from "../controllers/user/userController";
 
 const userRouter = () => {
     const router = express.Router(); 
@@ -10,6 +11,9 @@ const userRouter = () => {
     router.post('/login', userLogin);
 
     router.get('/scrap-management', scrapList);
+
+    router.post('/sell-scrap', sellScrap);
+    
      
     return router
 }
