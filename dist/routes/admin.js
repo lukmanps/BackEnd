@@ -20,7 +20,8 @@ const adminRouter = () => {
     router.get('/pickups', pickupController_1.pickupsList);
     //Pickup Details
     router.get('/pickup-details', pickupController_1.pickupDetails);
-    router.patch('/pickup-details', pickupController_1.changePickupStatus);
+    router.get('/get-selected-scraps', pickupController_1.selectedScraps);
+    router.patch('/pickup-details', pickupController_1.changePickupStatus); //Update Pickup Status;
     //Payment
     router.get('/get-key', payment_1.getKey);
     router.post('/payment', payment_1.payment);

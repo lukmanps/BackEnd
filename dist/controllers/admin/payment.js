@@ -17,6 +17,7 @@ const payment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         //Take amount from Front end as Req.body.amount
         //Number(req.body.amount * 100)
+        console.log(req.body);
         const amount = req.body.amount;
         console.log(amount, "PAYMENT Called");
         const options = {
@@ -41,6 +42,7 @@ const paymentVerification = (req, res) => __awaiter(void 0, void 0, void 0, func
         console.log(":::::: Payment Verification Called :::::");
         console.log(req.body, "Payment Verification Done!");
         const { razorpay_order_id, razorpay_payment_id, razorpay_signature, amount, userId } = req.body;
+        console.log(razorpay_payment_id, amount, userId, " Data from front end");
         (0, paymentHelper_1.updatePayment)(userId, amount)
             .then((response) => {
             if (response.status === true) {

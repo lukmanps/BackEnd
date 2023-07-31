@@ -2,7 +2,7 @@ import express from "express";
 import { adminLogin } from "../controllers/auth/adminAuthController";
 import { customersList, changeUserStatus, userData, deleteUser } from "../controllers/admin/adminController";
 import { addScrapMaterial } from "../controllers/scrap/scrapController";
-import { pickupsList, pickupDetails, changePickupStatus} from "../controllers/admin/pickupController";
+import { pickupsList, pickupDetails, changePickupStatus, selectedScraps} from "../controllers/admin/pickupController";
 import { payment, paymentVerification, getKey } from "../controllers/admin/payment";
 
 const adminRouter = () => {
@@ -18,9 +18,9 @@ const adminRouter = () => {
     router.get('/pickups', pickupsList);
 
     //Pickup Details
-    router.get('/pickup-details', pickupDetails);   
-    router.patch('/pickup-details', changePickupStatus);
-
+    router.get('/pickup-details', pickupDetails);  
+    router.get('/get-selected-scraps', selectedScraps); 
+    router.patch('/pickup-details', changePickupStatus); //Update Pickup Status;
 
     //Payment
     router.get('/get-key', getKey);

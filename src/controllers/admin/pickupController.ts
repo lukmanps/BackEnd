@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getAllPickups, getPickupDetails, updatePickupStatus } from "../../helper/admin/pickupHelper";
+import { getAllPickups, getPickupDetails, getSelectedScrap, updatePickupStatus } from "../../helper/admin/pickupHelper";
 
 export const pickupsList = (req: Request, res: Response) => {
     getAllPickups()
@@ -16,8 +16,22 @@ export const pickupDetails = (req: Request, res: Response) => {
     const id: string = req.query.id as string;
     console.log(id, " : ID from rquest");
     getPickupDetails(id)
+        .then((responses:any) => {
+            responses.map((response: any) => {
+            res.json(response);
+            })
+            
+        })
+        .catch((err) => {
+            console.log(err, " : ERROR in pickupDetais");
+        });
+}
+
+export const selectedScraps = (req: Request, res: Response) => {
+    console.log(" Selected Scraps called");
+    const id: string = req.query.id as string;
+    getSelectedScrap(id)
         .then((response) => {
-            console.log(response, " :Response From DB");
             res.json(response);
         })
         .catch((err) => {

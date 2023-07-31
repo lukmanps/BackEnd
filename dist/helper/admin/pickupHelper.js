@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updatePickupStatus = exports.getPickupDetails = exports.getAllPickups = void 0;
+exports.updatePickupStatus = exports.getSelectedScrap = exports.getPickupDetails = exports.getAllPickups = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const pickupModel_1 = require("../../model/pickupModel");
 const getAllPickups = () => {
@@ -42,6 +42,30 @@ const getPickupDetails = (id) => {
             const data = yield pickupModel_1.pickupCollection.findById(id);
             const result = yield pickupModel_1.pickupCollection.aggregate([
                 {
+                    $project: {
+                        '_id': 1,
+                        'user': 1,
+                        'date': 1,
+                        'formData': 1,
+                        'timeSlot': 1,
+                        'status': 1,
+                    }
+                },
+            ]);
+            resolve(result);
+        }
+        catch (err) {
+            console.log(err, ": ERROR in getPickupDetails");
+        }
+    }));
+};
+exports.getPickupDetails = getPickupDetails;
+const getSelectedScrap = (id) => {
+    return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const data = yield pickupModel_1.pickupCollection.findById(id);
+            const result = yield pickupModel_1.pickupCollection.aggregate([
+                {
                     $match: { _id: new mongoose_1.default.Types.ObjectId(id) },
                 },
                 {
@@ -49,10 +73,6 @@ const getPickupDetails = (id) => {
                 },
                 {
                     $project: {
-                        date: '$date',
-                        formData: '$formData',
-                        timeSlot: '$timeSlot',
-                        status: '$status',
                         item: '$scrap.item',
                         qty: '$scrap.quantity'
                     }
@@ -67,10 +87,6 @@ const getPickupDetails = (id) => {
                 },
                 {
                     $project: {
-                        'date': 1,
-                        'formData': 1,
-                        'timeSlot': 1,
-                        'status': 1,
                         'qty': 1,
                         'scrap': { $arrayElemAt: ['$scrap', 0] }
                     }
@@ -83,7 +99,7 @@ const getPickupDetails = (id) => {
         }
     }));
 };
-exports.getPickupDetails = getPickupDetails;
+exports.getSelectedScrap = getSelectedScrap;
 const updatePickupStatus = (id, value) => {
     return new Promise((resolve, reject) => {
         pickupModel_1.pickupCollection.findByIdAndUpdate(id, { status: value })
@@ -100,5 +116,6 @@ exports.updatePickupStatus = updatePickupStatus;
 exports.default = {
     getAllPickups: exports.getAllPickups,
     getPickupDetails: exports.getPickupDetails,
+    getSelectedScrap: exports.getSelectedScrap,
     updatePickupStatus: exports.updatePickupStatus
 };

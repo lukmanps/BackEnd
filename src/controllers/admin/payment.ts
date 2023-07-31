@@ -8,6 +8,7 @@ export const payment = async (req: Request, res: Response) => {
     try {
         //Take amount from Front end as Req.body.amount
         //Number(req.body.amount * 100)
+        console.log(req.body);
         const amount: number = req.body.amount;
         console.log(amount, "PAYMENT Called");
         const options = {
@@ -35,8 +36,8 @@ export const paymentVerification = async (req: Request, res: Response) => {
         console.log(req.body, "Payment Verification Done!");
 
         const { razorpay_order_id, razorpay_payment_id, razorpay_signature, amount, userId } = req.body;
-
-        updatePayment(userId, amount )
+        console.log(razorpay_payment_id, amount, userId, " Data from front end");
+        updatePayment( userId, amount )
         .then((response: any) => {
             if(response.status === true){
                 res.redirect(`http://localhost:3000/admin/payment-success?reference=${razorpay_payment_id}`);

@@ -30,6 +30,33 @@ export const getPickupDetails = (id: string) => {
             const data = await pickupCollection.findById(id);
 
             const result: any = await pickupCollection.aggregate([
+                
+                {
+                    $project: {
+                        '_id':1,
+                        'user': 1,
+                        'date': 1,
+                        'formData': 1,
+                        'timeSlot': 1,
+                        'status': 1,
+                    }
+                },
+            ])
+            resolve(result);
+        }
+        catch (err) {
+            console.log(err, ": ERROR in getPickupDetails");
+        }
+
+    })
+}
+
+export const getSelectedScrap = (id: string) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const data = await pickupCollection.findById(id);
+
+            const result: any = await pickupCollection.aggregate([
                 {
                     $match: { _id: new mongoose.Types.ObjectId(id) },
                 },
@@ -38,10 +65,6 @@ export const getPickupDetails = (id: string) => {
                 },
                 {
                     $project: {
-                        date: '$date',
-                        formData: '$formData',
-                        timeSlot: '$timeSlot',
-                        status: '$status',
                         item: '$scrap.item',
                         qty: '$scrap.quantity'
                     }
@@ -56,10 +79,6 @@ export const getPickupDetails = (id: string) => {
                 },
                 {
                     $project: {
-                        'date': 1,
-                        'formData': 1,
-                        'timeSlot': 1,
-                        'status': 1,
                         'qty': 1,
                         'scrap': { $arrayElemAt: ['$scrap', 0] }
                     }
@@ -90,5 +109,6 @@ export const updatePickupStatus = (id: string, value: string) => {
 export default {
     getAllPickups,
     getPickupDetails,
+    getSelectedScrap,
     updatePickupStatus
 }
