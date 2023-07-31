@@ -20,6 +20,7 @@ export const doSellScrap = (data: selectedData) => {
             })
             .catch((err) => {
                reject({err, status: false});
+               console.log(err, " : ERROR in DB");
             })
     })
 }

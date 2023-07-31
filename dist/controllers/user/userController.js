@@ -5,9 +5,9 @@ const userHelper_1 = require("../../helper/user/userHelper");
 const sellScrap = (req, res) => {
     try {
         const data = req.body;
-        console.log(data, " : Sell Scrap Data from Front End");
         (0, userHelper_1.doSellScrap)(data)
             .then((response) => {
+            console.log(response, " : Response after adding to DB");
             res.json(response.status);
         })
             .catch((response) => {

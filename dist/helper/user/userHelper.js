@@ -17,6 +17,7 @@ const doSellScrap = (data) => {
         })
             .catch((err) => {
             reject({ err, status: false });
+            console.log(err, " : ERROR in DB");
         });
     });
 };

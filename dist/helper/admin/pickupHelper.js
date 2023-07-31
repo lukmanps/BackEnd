@@ -20,6 +20,7 @@ const getAllPickups = () => {
         pickupModel_1.pickupCollection.aggregate([
             {
                 $project: {
+                    '_id': 1,
                     'date': 1,
                     'formData.name': 1,
                     'status': 1,
@@ -39,8 +40,10 @@ exports.getAllPickups = getAllPickups;
 const getPickupDetails = (id) => {
     return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const data = yield pickupModel_1.pickupCollection.findById(id);
             const result = yield pickupModel_1.pickupCollection.aggregate([
+                {
+                    $match: { _id: new mongoose_1.default.Types.ObjectId(id) }
+                },
                 {
                     $project: {
                         '_id': 1,

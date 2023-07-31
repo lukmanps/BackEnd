@@ -8,6 +8,7 @@ export const getAllPickups = () => {
         pickupCollection.aggregate([
             {
                 $project: {
+                    '_id': 1,
                     'date': 1,
                     'formData.name': 1,
                     'status': 1,
@@ -27,10 +28,11 @@ export const getAllPickups = () => {
 export const getPickupDetails = (id: string) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const data = await pickupCollection.findById(id);
 
             const result: any = await pickupCollection.aggregate([
-                
+                {
+                    $match: { _id: new mongoose.Types.ObjectId(id) }
+                },
                 {
                     $project: {
                         '_id':1,
