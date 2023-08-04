@@ -23,20 +23,14 @@ export interface selectedData {
 }
 
 export const sellScrap = (req: Request, res: Response) => {
-    try{
         const data: selectedData = req.body
         doSellScrap(data)
         .then((response: any) => {
-            console.log(response, " : Response after adding to DB");
             res.json(response.status);
         })
         .catch((response:any) => {
             res.json(response.status);
         })
-    }   
-    catch(err){
-        console.log(err);
-    }
 }
 
 export default {

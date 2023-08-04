@@ -34,22 +34,17 @@ export const userSignup = (req: Request, res: Response) => {
 }
 
 export const userLogin = (req: Request, res: Response) => {
-    try{
-
         const userData: userDetails = req.body;
         
+        console.log(userData, " user data");
         doLogin(userData)
-        .then((response)=>{
-            console.log(response, ": RESPONSE in userLOGIN");
-            res.json(response);
+        .then((response: any)=>{
+            console.log(response, " :: Response from doLogin");
+            res.status(200).json(response);
         })
         .catch((err)=>{
-            console.log(err, ': ERROR from do LOGIN');
+            console.log(err, ': ERROR in userLogin');
         })
-    }
-    catch(err){
-        console.log(err, ' : ERROR in userLogin')
-    }
 }
 
 

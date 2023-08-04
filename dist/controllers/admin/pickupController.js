@@ -15,7 +15,6 @@ const pickupsList = (req, res) => {
 exports.pickupsList = pickupsList;
 const pickupDetails = (req, res) => {
     const id = req.query.id;
-    console.log(id, " : ID from rquest");
     (0, pickupHelper_1.getPickupDetails)(id)
         .then((responses) => {
         responses.map((response) => {
@@ -28,7 +27,6 @@ const pickupDetails = (req, res) => {
 };
 exports.pickupDetails = pickupDetails;
 const selectedScraps = (req, res) => {
-    console.log(" Selected Scraps called");
     const id = req.query.id;
     (0, pickupHelper_1.getSelectedScrap)(id)
         .then((response) => {
@@ -41,7 +39,6 @@ const selectedScraps = (req, res) => {
 exports.selectedScraps = selectedScraps;
 const changePickupStatus = (req, res) => {
     const id = req.query.id;
-    console.log(req.body.value, id, " Value from FE");
     (0, pickupHelper_1.updatePickupStatus)(id, req.body.value)
         .then((response) => {
         console.log(true);

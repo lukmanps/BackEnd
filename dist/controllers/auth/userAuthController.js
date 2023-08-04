@@ -25,20 +25,16 @@ const userSignup = (req, res) => {
 };
 exports.userSignup = userSignup;
 const userLogin = (req, res) => {
-    try {
-        const userData = req.body;
-        (0, userAuthHelper_1.doLogin)(userData)
-            .then((response) => {
-            console.log(response, ": RESPONSE in userLOGIN");
-            res.json(response);
-        })
-            .catch((err) => {
-            console.log(err, ': ERROR from do LOGIN');
-        });
-    }
-    catch (err) {
-        console.log(err, ' : ERROR in userLogin');
-    }
+    const userData = req.body;
+    console.log(userData, " user data");
+    (0, userAuthHelper_1.doLogin)(userData)
+        .then((response) => {
+        console.log(response, " :: Response from doLogin");
+        res.status(200).json(response);
+    })
+        .catch((err) => {
+        console.log(err, ': ERROR in userLogin');
+    });
 };
 exports.userLogin = userLogin;
 exports.default = {

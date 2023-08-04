@@ -2,8 +2,7 @@ import { userDetails } from '../../controllers/auth/userAuthController';
 import { userCollection } from '../../model/userModel';
 import bcrypt from 'bcrypt';
 import jwt, { Secret } from 'jsonwebtoken';
-import dotenv from 'dotenv';
-dotenv.config();
+require('dotenv').config();
 
 
 //User Registration
@@ -49,7 +48,6 @@ export const doLogin = (data: { email: string, password: string }) => {
             if (user) {
                 if (user.status) {
                     const verifyPassword = await bcrypt.compare(data.password, user.password);
-                    console.log(verifyPassword, ': verify Password status')
                     if (verifyPassword) {
                         let userData = {
                             id: user._id,
@@ -58,8 +56,8 @@ export const doLogin = (data: { email: string, password: string }) => {
                             phoneNo: user.phoneNo,
                             status: user.status
                         }
-                        const accessToken = jwt.sign(userData, process.env.JWT_KEY as Secret, { expiresIn: '1d' });
-                        resolve({ userData, accessToken });
+                        const token = jwt.sign(userData, process.env.JWT_KEY as Secret, { expiresIn: '1d' });
+                        resolve({ userData, token });
                     } else {
                         let message = 'Incorrect Password'
                         resolve({ status: false, message });
@@ -74,8 +72,7 @@ export const doLogin = (data: { email: string, password: string }) => {
             }
         }
         catch (err) {
-            console.log(err);
-            reject(err);
+            console.log(err, " :: Error in doLogin ");
         }
     })
 }

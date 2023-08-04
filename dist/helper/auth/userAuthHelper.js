@@ -16,8 +16,7 @@ exports.doLogin = exports.doRegister = void 0;
 const userModel_1 = require("../../model/userModel");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
+require('dotenv').config();
 //User Registration
 const doRegister = (data) => {
     return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
@@ -56,7 +55,6 @@ const doLogin = (data) => {
             if (user) {
                 if (user.status) {
                     const verifyPassword = yield bcrypt_1.default.compare(data.password, user.password);
-                    console.log(verifyPassword, ': verify Password status');
                     if (verifyPassword) {
                         let userData = {
                             id: user._id,
@@ -65,8 +63,8 @@ const doLogin = (data) => {
                             phoneNo: user.phoneNo,
                             status: user.status
                         };
-                        const accessToken = jsonwebtoken_1.default.sign(userData, process.env.JWT_KEY, { expiresIn: '1d' });
-                        resolve({ userData, accessToken });
+                        const token = jsonwebtoken_1.default.sign(userData, process.env.JWT_KEY, { expiresIn: '1d' });
+                        resolve({ userData, token });
                     }
                     else {
                         let message = 'Incorrect Password';
@@ -84,8 +82,7 @@ const doLogin = (data) => {
             }
         }
         catch (err) {
-            console.log(err);
-            reject(err);
+            console.log(err, " :: Error in doLogin ");
         }
     }));
 };

@@ -43,6 +43,9 @@ export const paymentVerification = async (req: Request, res: Response) => {
                 res.redirect(`http://localhost:3000/admin/payment-success?reference=${razorpay_payment_id}`);
             }
         })
+        .catch((err) => {
+            console.log(err, " :ERROR in paymentVerification");
+        })
 
         
     }

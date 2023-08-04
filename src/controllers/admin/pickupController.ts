@@ -1,5 +1,11 @@
 import { Request, Response } from "express";
-import { getAllPickups, getPickupDetails, getSelectedScrap, updatePickupStatus } from "../../helper/admin/pickupHelper";
+import {
+    getAllPickups,
+    getPickupDetails,
+    getSelectedScrap,
+    updatePickupStatus
+} from "../../helper/admin/pickupHelper";
+
 
 export const pickupsList = (req: Request, res: Response) => {
     getAllPickups()
@@ -14,13 +20,12 @@ export const pickupsList = (req: Request, res: Response) => {
 
 export const pickupDetails = (req: Request, res: Response) => {
     const id: string = req.query.id as string;
-    console.log(id, " : ID from rquest");
     getPickupDetails(id)
-        .then((responses:any) => {
+        .then((responses: any) => {
             responses.map((response: any) => {
-            res.json(response);
+                res.json(response);
             })
-            
+
         })
         .catch((err) => {
             console.log(err, " : ERROR in pickupDetais");
@@ -28,7 +33,6 @@ export const pickupDetails = (req: Request, res: Response) => {
 }
 
 export const selectedScraps = (req: Request, res: Response) => {
-    console.log(" Selected Scraps called");
     const id: string = req.query.id as string;
     getSelectedScrap(id)
         .then((response) => {
@@ -41,7 +45,6 @@ export const selectedScraps = (req: Request, res: Response) => {
 
 export const changePickupStatus = (req: Request, res: Response) => {
     const id: string = req.query.id as string;
-    console.log(req.body.value, id, " Value from FE");
     updatePickupStatus(id, req.body.value)
         .then((response) => {
             console.log(true)

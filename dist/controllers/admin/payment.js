@@ -48,6 +48,9 @@ const paymentVerification = (req, res) => __awaiter(void 0, void 0, void 0, func
             if (response.status === true) {
                 res.redirect(`http://localhost:3000/admin/payment-success?reference=${razorpay_payment_id}`);
             }
+        })
+            .catch((err) => {
+            console.log(err, " :ERROR in paymentVerification");
         });
     }
     catch (err) {
