@@ -21,7 +21,7 @@ const payment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const amount = req.body.amount;
         console.log(amount, "PAYMENT Called");
         const options = {
-            amount: amount * 100,
+            amount: amount,
             currency: "INR",
             receipt: "order_rcptid_11"
         };
@@ -39,12 +39,12 @@ const payment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.payment = payment;
 const paymentVerification = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log(":::::: Payment Verification Called :::::");
-        console.log(req.body, "Payment Verification Done!");
-        const { razorpay_order_id, razorpay_payment_id, razorpay_signature, amount, userId } = req.body;
-        console.log(razorpay_payment_id, amount, userId, " Data from front end");
+        const amount = req.query.amount;
+        const userId = req.query.userId;
+        const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
         (0, paymentHelper_1.updatePayment)(userId, amount)
             .then((response) => {
+            console.log(response, " :: RESPonse from db after paymetn");
             if (response.status === true) {
                 res.redirect(`http://localhost:3000/admin/payment-success?reference=${razorpay_payment_id}`);
             }

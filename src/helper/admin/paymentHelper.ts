@@ -1,8 +1,10 @@
 import { userCollection } from "../../model/userModel"
 
 export const updatePayment = (id:string, amount: number) => {
-    return new Promise ((resolve, reject) => {
-        userCollection.findByIdAndUpdate(id, {wallet: amount})
+    return new Promise (async(resolve, reject) => {
+        const user: any = await userCollection.findById(id);
+        let walletAmount = user?.wallet 
+        userCollection.findByIdAndUpdate(id, {wallet: walletAmount+amount})
         .then((response) => {
             resolve({status: true});
         })

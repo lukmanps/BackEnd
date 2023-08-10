@@ -12,7 +12,7 @@ export const payment = async (req: Request, res: Response) => {
         const amount: number = req.body.amount;
         console.log(amount, "PAYMENT Called");
         const options = {
-            amount: amount * 100,  // amount in the smallest currency unit
+            amount: amount,  // amount in the smallest currency unit
             currency: "INR",
             receipt: "order_rcptid_11"
         };
@@ -32,22 +32,22 @@ export const payment = async (req: Request, res: Response) => {
 
 export const paymentVerification = async (req: Request, res: Response) => {
     try {
-        console.log(":::::: Payment Verification Called :::::")
-        console.log(req.body, "Payment Verification Done!");
+        const amount = req.query.amount as Number | undefined;
+        const userId: String | undefined = req.query.userId;
 
-        const { razorpay_order_id, razorpay_payment_id, razorpay_signature, amount, userId } = req.body;
-        console.log(razorpay_payment_id, amount, userId, " Data from front end");
-        updatePayment( userId, amount )
-        .then((response: any) => {
-            if(response.status === true){
-                res.redirect(`http://localhost:3000/admin/payment-success?reference=${razorpay_payment_id}`);
-            }
-        })
-        .catch((err) => {
-            console.log(err, " :ERROR in paymentVerification");
-        })
+        const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+        updatePayment(userId, amount)
+            .then((response: any) => {
+                console.log(response, " :: RESPonse from db after paymetn");
+                if (response.status === true) {
+                    res.redirect(`http://localhost:3000/admin/payment-success?reference=${razorpay_payment_id}`);
+                }
+            })
+            .catch((err) => {
+                console.log(err, " :ERROR in paymentVerification");
+            })
 
-        
+
     }
     catch (err) {
         console.log(err, " : ERROR IN Payment ");

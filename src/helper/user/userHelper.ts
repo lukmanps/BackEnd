@@ -1,13 +1,29 @@
 import { review, selectedData } from "../../controllers/user/userController"
 import { pickupCollection } from "../../model/pickupModel"
 import { reviewCollection } from "../../model/reviewModel";
+import { scrapCollection } from "../../model/scrapModel";
 
 
 export const doSellScrap = (data: selectedData) => {
-    return new Promise((resolve, reject) => {
-        const date = new Date();
-        
-        pickupCollection.create(data)
+    return new Promise(async(resolve, reject) => {
+        let totalAmount = 0;
+
+        for (const scrap of data.scrap) {
+            const scrapData = await scrapCollection.findById(scrap.item);
+            if (scrapData) {
+                totalAmount += scrapData.price * scrap.quantity;
+            } else {
+                reject({ error: 'Scrap item not found', status: false });
+                return; // Return to exit the loop early if a scrap item is not found
+            }
+        }
+
+        const newData = {
+            ...data,
+            totalAmount
+        }
+
+        pickupCollection.create(newData)
             .then((response) => {
                 resolve({response, status: true});
             })

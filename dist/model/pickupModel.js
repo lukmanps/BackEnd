@@ -31,6 +31,8 @@ exports.pickupSchema = new mongoose_1.Schema({
     status: {
         type: String,
         default: 'Pending'
-    }
+    },
+    totalAmount: Number,
+    paymentId: String
 });
 exports.pickupCollection = (0, mongoose_1.model)('pickup', exports.pickupSchema);

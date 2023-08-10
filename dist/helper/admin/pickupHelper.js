@@ -52,6 +52,7 @@ const getPickupDetails = (id) => {
                         'formData': 1,
                         'timeSlot': 1,
                         'status': 1,
+                        'totalAmount': 1
                     }
                 },
             ]);

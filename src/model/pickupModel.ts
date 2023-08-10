@@ -30,7 +30,9 @@ export const pickupSchema = new Schema({
     status: {
         type: String,
         default: 'Pending'
-    }
+    },
+    totalAmount: Number,
+    paymentId: String
 })
 
 export const pickupCollection = model('pickup', pickupSchema);

@@ -12,10 +12,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAllReviews = exports.addReview = exports.doSellScrap = void 0;
 const pickupModel_1 = require("../../model/pickupModel");
 const reviewModel_1 = require("../../model/reviewModel");
+const scrapModel_1 = require("../../model/scrapModel");
 const doSellScrap = (data) => {
-    return new Promise((resolve, reject) => {
-        const date = new Date();
-        pickupModel_1.pickupCollection.create(data)
+    return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
+        let totalAmount = 0;
+        for (const scrap of data.scrap) {
+            const scrapData = yield scrapModel_1.scrapCollection.findById(scrap.item);
+            if (scrapData) {
+                totalAmount += scrapData.price * scrap.quantity;
+            }
+            else {
+                reject({ error: 'Scrap item not found', status: false });
+                return; // Return to exit the loop early if a scrap item is not found
+            }
+        }
+        const newData = Object.assign(Object.assign({}, data), { totalAmount });
+        pickupModel_1.pickupCollection.create(newData)
             .then((response) => {
             resolve({ response, status: true });
         })
@@ -23,7 +35,7 @@ const doSellScrap = (data) => {
             reject({ err, status: false });
             console.log(err, " : ERROR in DB");
         });
-    });
+    }));
 };
 exports.doSellScrap = doSellScrap;
 const addReview = (data) => __awaiter(void 0, void 0, void 0, function* () {

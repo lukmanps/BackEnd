@@ -41,6 +41,7 @@ export const getPickupDetails = (id: string) => {
                         'formData': 1,
                         'timeSlot': 1,
                         'status': 1,
+                        'totalAmount':1
                     }
                 },
             ])
