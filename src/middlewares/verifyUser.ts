@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt, { Secret } from 'jsonwebtoken';
 import { userCollection } from "../model/userModel";
+import { Schema } from "mongoose";
 require('dotenv').config();
 
 export const verifyUser = (req: Request, res: Response, next: NextFunction) => {
@@ -11,18 +12,28 @@ export const verifyUser = (req: Request, res: Response, next: NextFunction) => {
     console.log(token, "token in middleware");
     try {
         if (!token) {
+            console.log('Message: Unauthorized request. Token missing.')
             return res.status(401).json({ message: 'Unauthorized request. Token missing.' });
         }
 
-        const verifiedUser = jwt.verify(token, process.env.JWT_KEY as Secret);
+        const validUser:any = jwt.verify(token, process.env.JWT_KEY as Secret, async(err, user: any) => {
+            if (user) {
+                console.log(user, " :: USer Details in Middleware");
+                const dbUser:any = await userCollection.findById({ _id: user.id})
+                if(dbUser.status === true){
+                    next();
+                } else {
+                    return res.status(401).json({ message: 'Unauthorized request. User is Blocked!.' });
+                }
+            }else {
+                return res.status(401).json({ message: 'Unauthorized request. Please try again later!.' });
+            }
+        });
 
-        if (!verifiedUser) {
-            return res.status(401).json({ message: 'Unauthorized request. Invalid token.' });
+        if(!validUser){
+            return res.status(401).json({ message: 'Unauthorized request. Please try again later!' });
         }
 
-        // Attach the verified user to the request for use in subsequent middleware/routes
-        // req.user = verifiedUser;
-        next();
     } catch (error) {
         console.log(error, ' :: ERROR in the verifyUser middleware');
         return res.status(401).json({ message: 'Unauthorized request. Token verification failed.' });

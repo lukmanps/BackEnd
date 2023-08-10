@@ -41,10 +41,10 @@ const changePickupStatus = (req, res) => {
     const id = req.query.id;
     (0, pickupHelper_1.updatePickupStatus)(id, req.body.value)
         .then((response) => {
-        console.log(true);
+        res.status(200).json({ status: true });
     })
         .catch(() => {
-        console.log(false);
+        res.status(401).json({ status: false });
     });
 };
 exports.changePickupStatus = changePickupStatus;

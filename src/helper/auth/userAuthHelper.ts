@@ -56,7 +56,7 @@ export const doLogin = (data: { email: string, password: string }) => {
                             phoneNo: user.phoneNo,
                             status: user.status
                         }
-                        const token = jwt.sign(userData, process.env.JWT_KEY as Secret, { expiresIn: '1d' });
+                        const token = jwt.sign(userData, process.env.JWT_KEY as Secret, { expiresIn: 3600 });
                         resolve({ userData, token });
                     } else {
                         let message = 'Incorrect Password'

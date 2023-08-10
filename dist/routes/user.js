@@ -14,6 +14,8 @@ const userRouter = () => {
     router.post('/login', userAuthController_1.userLogin);
     router.get('/scrap-management', verifyUser_1.verifyUser, scrapController_1.scrapList);
     router.post('/sell-scrap', verifyUser_1.verifyUser, userController_1.sellScrap);
+    router.post('/review', userController_1.review);
+    router.get('/get-reviews', userController_1.getReviews);
     return router;
 };
 exports.default = userRouter;

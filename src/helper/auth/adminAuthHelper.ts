@@ -11,10 +11,11 @@ export const adminDoLogin = (data: { email: string, password: string }) => {
             if (admin) {
                 if (admin.password === data.password) {
                     let adminInfo = {
+                        id: admin._id,
                         email: admin.email,
                         username: admin.username
                     }
-                    let adminAccessToken = jwt.sign(adminInfo, process.env.JWT_key as Secret, {expiresIn: '1d'});
+                    let adminAccessToken = jwt.sign(adminInfo, process.env.JWT_key as Secret, {expiresIn: 3600});
                     resolve({ adminInfo, adminAccessToken })
                 } else {
                     let message = 'Incorrect Password';

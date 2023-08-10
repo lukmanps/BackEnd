@@ -7,10 +7,8 @@ export const addScrapMaterial = (req: Request, res: Response) => {
         scrap: string,
         price: number
     } = req.body;
-    console.log(formData, "FORRMMM DATA");
     addScrap(formData)
     .then((response) => {
-        console.log(response, "RESPONSE IN addScrapMaterial");
         res.json(response);
     })
     .catch((err)=> {

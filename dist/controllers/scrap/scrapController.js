@@ -4,10 +4,8 @@ exports.scrapList = exports.addScrapMaterial = void 0;
 const scrapHelper_1 = require("../../helper/scrap/scrapHelper");
 const addScrapMaterial = (req, res) => {
     const formData = req.body;
-    console.log(formData, "FORRMMM DATA");
     (0, scrapHelper_1.addScrap)(formData)
         .then((response) => {
-        console.log(response, "RESPONSE IN addScrapMaterial");
         res.json(response);
     })
         .catch((err) => {

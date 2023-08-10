@@ -9,23 +9,32 @@ const adminController_1 = require("../controllers/admin/adminController");
 const scrapController_1 = require("../controllers/scrap/scrapController");
 const pickupController_1 = require("../controllers/admin/pickupController");
 const payment_1 = require("../controllers/admin/payment");
+const dashboardController_1 = require("../controllers/admin/dashboardController");
+const verifyAdmin_1 = require("../middlewares/verifyAdmin");
 const adminRouter = () => {
     const router = express_1.default.Router();
     router.post('/login', adminAuthController_1.adminLogin);
-    router.get('/user-management', adminController_1.customersList);
+    //Customer Management
+    router.get('/user-management', verifyAdmin_1.verifyAdmin, adminController_1.customersList);
     router.patch('/change-status', adminController_1.changeUserStatus);
-    router.get('/view-user', adminController_1.userData);
+    router.get('/view-user', verifyAdmin_1.verifyAdmin, adminController_1.userData);
     router.delete('/delete-user', adminController_1.deleteUser);
+    //Scrap Management
     router.post('/add-scrap', scrapController_1.addScrapMaterial);
-    router.get('/pickups', pickupController_1.pickupsList);
+    router.get('/scrap-management', verifyAdmin_1.verifyAdmin, scrapController_1.scrapList);
     //Pickup Details
-    router.get('/pickup-details', pickupController_1.pickupDetails);
-    router.get('/get-selected-scraps', pickupController_1.selectedScraps);
+    router.get('/pickups', verifyAdmin_1.verifyAdmin, pickupController_1.pickupsList);
+    router.get('/pickup-details', verifyAdmin_1.verifyAdmin, pickupController_1.pickupDetails);
+    router.get('/get-selected-scraps', verifyAdmin_1.verifyAdmin, pickupController_1.selectedScraps);
     router.patch('/pickup-details', pickupController_1.changePickupStatus); //Update Pickup Status;
     //Payment
     router.get('/get-key', payment_1.getKey);
     router.post('/payment', payment_1.payment);
     router.post('/payment-verification', payment_1.paymentVerification);
+    //Dashboard
+    router.get('/get-customer-count', dashboardController_1.customerCount);
+    router.get('/get-pickup-count', dashboardController_1.pickupCount);
+    router.get('/get-dashboard-info', dashboardController_1.dashboardInfo);
     return router;
 };
 exports.default = adminRouter;

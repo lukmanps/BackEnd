@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-import { doSellScrap } from "../../helper/user/userHelper";
+import { Request, Response, response } from "express";
+import { doSellScrap, addReview, getAllReviews } from "../../helper/user/userHelper";
 
 export interface selectedData {
     userId: string,
@@ -24,6 +24,7 @@ export interface selectedData {
 
 export const sellScrap = (req: Request, res: Response) => {
         const data: selectedData = req.body
+
         doSellScrap(data)
         .then((response: any) => {
             res.json(response.status);
@@ -33,6 +34,27 @@ export const sellScrap = (req: Request, res: Response) => {
         })
 }
 
+export const review = (req: Request, res: Response) => {
+        addReview(req.body)
+        .then((response) => {
+            res.json(response);
+        })
+        .catch((err) => {
+            res.json(err.status);
+        })
+}
+
+export const getReviews = async(req: Request, res: Response) => {
+    try{
+        const reviews = await getAllReviews();
+        res.json(reviews);
+    } 
+    catch(err){
+        console.log(err, " :: Error in getReviews");
+    }
+}   
+
 export default {
-    sellScrap
+    sellScrap,
+    review
 }

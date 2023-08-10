@@ -7,7 +7,7 @@ const adminLogin = (req, res) => {
         const adminData = req.body;
         (0, adminAuthHelper_1.adminDoLogin)(adminData)
             .then((response) => {
-            res.json(response);
+            res.status(200).json(response);
         }).catch((err) => {
             console.log(err, ' :ERROR in adminLogin');
         });

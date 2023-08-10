@@ -47,10 +47,10 @@ export const changePickupStatus = (req: Request, res: Response) => {
     const id: string = req.query.id as string;
     updatePickupStatus(id, req.body.value)
         .then((response) => {
-            console.log(true)
+            res.status(200).json({status: true});
         })
         .catch(() => {
-            console.log(false);
+            res.status(401).json({status: false});
         })
 }
 

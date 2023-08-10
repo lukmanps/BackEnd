@@ -63,7 +63,7 @@ const doLogin = (data) => {
                             phoneNo: user.phoneNo,
                             status: user.status
                         };
-                        const token = jsonwebtoken_1.default.sign(userData, process.env.JWT_KEY, { expiresIn: '1d' });
+                        const token = jsonwebtoken_1.default.sign(userData, process.env.JWT_KEY, { expiresIn: 3600 });
                         resolve({ userData, token });
                     }
                     else {

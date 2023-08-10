@@ -23,10 +23,11 @@ const adminDoLogin = (data) => {
             if (admin) {
                 if (admin.password === data.password) {
                     let adminInfo = {
+                        id: admin._id,
                         email: admin.email,
                         username: admin.username
                     };
-                    let adminAccessToken = jsonwebtoken_1.default.sign(adminInfo, process.env.JWT_key, { expiresIn: '1d' });
+                    let adminAccessToken = jsonwebtoken_1.default.sign(adminInfo, process.env.JWT_key, { expiresIn: 3600 });
                     resolve({ adminInfo, adminAccessToken });
                 }
                 else {

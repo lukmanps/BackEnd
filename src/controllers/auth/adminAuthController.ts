@@ -10,7 +10,7 @@ export const adminLogin = (req: Request, res: Response) => {
 
         adminDoLogin(adminData)
         .then((response)=>{
-            res.json(response);
+            res.status(200).json(response);
         }).catch((err)=>{
             console.log(err, ' :ERROR in adminLogin');
         });

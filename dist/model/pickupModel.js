@@ -7,7 +7,10 @@ exports.pickupSchema = new mongoose_1.Schema({
         type: mongoose_1.Schema.Types.ObjectId,
         ref: 'user'
     },
-    date: String,
+    date: {
+        type: Date,
+        default: Date.now
+    },
     scrap: [{
             item: mongoose_1.Schema.Types.ObjectId,
             quantity: Number

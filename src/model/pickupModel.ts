@@ -6,7 +6,10 @@ export const pickupSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'user'
     },
-    date: String,
+    date: {
+        type: Date,
+        default: Date.now
+    },
     scrap: [{
         item: Schema.Types.ObjectId,
         quantity: Number
