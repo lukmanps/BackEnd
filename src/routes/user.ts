@@ -1,7 +1,7 @@
 import express from "express";
-import {userSignup, userLogin} from "../controllers/auth/userAuthController";
+import {userSignup, userLogin, signInWithGoogle} from "../controllers/auth/userAuthController";
 import { scrapList } from "../controllers/scrap/scrapController";
-import { sellScrap, review, getReviews } from "../controllers/user/userController";
+import { sellScrap, review, getReviews, recentPickups } from "../controllers/user/userController";
 import { verifyUser } from "../middlewares/verifyUser";
 
 const userRouter = () => {
@@ -9,12 +9,15 @@ const userRouter = () => {
 
     router.post('/signup', userSignup);
     router.post('/login', userLogin);
+    router.post('/signin-with-google', signInWithGoogle);
 
-    router.get('/scrap-management', verifyUser, scrapList);
+    router.get('/scrap-management', scrapList);
     router.post('/sell-scrap',verifyUser, sellScrap);
 
     router.post('/review', review);
     router.get('/get-reviews', getReviews);
+
+    router.get('/get-recent-pickups',verifyUser, recentPickups);
     
      
     return router

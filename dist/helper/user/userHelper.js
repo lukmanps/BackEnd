@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllReviews = exports.addReview = exports.doSellScrap = void 0;
+exports.getRecentPickups = exports.getAllReviews = exports.addReview = exports.doSellScrap = void 0;
 const pickupModel_1 = require("../../model/pickupModel");
 const reviewModel_1 = require("../../model/reviewModel");
 const scrapModel_1 = require("../../model/scrapModel");
@@ -29,6 +29,16 @@ const doSellScrap = (data) => {
         const newData = Object.assign(Object.assign({}, data), { totalAmount });
         pickupModel_1.pickupCollection.create(newData)
             .then((response) => {
+            response.scrap.map((item) => __awaiter(void 0, void 0, void 0, function* () {
+                var _a, _b;
+                const scrap = yield scrapModel_1.scrapCollection.findById(item.item);
+                if (scrap) {
+                    let qty = (_a = scrap === null || scrap === void 0 ? void 0 : scrap.totalQty) !== null && _a !== void 0 ? _a : 0;
+                    let quantity = (_b = item.quantity) !== null && _b !== void 0 ? _b : 0;
+                    qty += quantity;
+                    yield scrapModel_1.scrapCollection.updateOne({ _id: item.item }, { $set: { totalQty: qty } });
+                }
+            }));
             resolve({ response, status: true });
         })
             .catch((err) => {
@@ -97,7 +107,18 @@ const getAllReviews = () => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getAllReviews = getAllReviews;
+const getRecentPickups = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const pickups = yield pickupModel_1.pickupCollection.find({ user: userId });
+        return pickups;
+    }
+    catch (err) {
+        console.log(err, ' :: Error in getRecentPickups');
+    }
+});
+exports.getRecentPickups = getRecentPickups;
 exports.default = {
     doSellScrap: exports.doSellScrap,
-    addReview: exports.addReview
+    addReview: exports.addReview,
+    getRecentPickups: exports.getRecentPickups
 };

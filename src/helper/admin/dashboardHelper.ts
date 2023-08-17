@@ -1,4 +1,5 @@
 import { pickupCollection } from "../../model/pickupModel";
+import { scrapCollection } from "../../model/scrapModel";
 import { userCollection } from "../../model/userModel";
 
 export const getCustomerCount = async() => {
@@ -25,7 +26,16 @@ export const getDashboardInfo = async() => {
     try{
         const pickupCount = await pickupCollection.countDocuments({});
         const customerCount = await userCollection.countDocuments({});
-        return {pickupCount, customerCount}
+        const scrapQty = await scrapCollection.aggregate([
+            {
+                $group: {
+                    _id: '$category',
+                    totalQty: { $sum: '$totalQty'}
+                }
+            }
+        ]);
+        
+        return {pickupCount, customerCount, scrapQty}
     }
     catch(err){
         console.log(err, ":: Error in getDashboardInfo");

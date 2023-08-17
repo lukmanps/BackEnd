@@ -32,20 +32,39 @@ export const payment = async (req: Request, res: Response) => {
 
 export const paymentVerification = async (req: Request, res: Response) => {
     try {
-        const amount = req.query.amount as Number | undefined;
-        const userId: String | undefined = req.query.userId;
+        const amount: number | undefined = req.query.amount as number | undefined;
+        const userId: string | undefined = req.query.userId as string | undefined;
+
 
         const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
-        updatePayment(userId, amount)
-            .then((response: any) => {
-                console.log(response, " :: RESPonse from db after paymetn");
-                if (response.status === true) {
-                    res.redirect(`http://localhost:3000/admin/payment-success?reference=${razorpay_payment_id}`);
-                }
-            })
-            .catch((err) => {
-                console.log(err, " :ERROR in paymentVerification");
-            })
+
+        if (userId !== undefined && amount !== undefined) {
+            updatePayment(userId, amount)
+                .then((response: any) => {
+                    console.log(response, " :: Response from db after payment");
+                    if (response.status === true) {
+                        res.redirect(`http://localhost:3000/admin/payment-success?reference=${razorpay_payment_id}`);
+                    }
+                })
+                .catch((err) => {
+                    console.log(err, " :ERROR in paymentVerification");
+                });
+        } else {
+            console.log("User ID is undefined");
+            res.redirect('http://localhost:3000/payment-error');
+        }
+        
+
+        // updatePayment(userId, amount)
+        //     .then((response: any) => {
+        //         console.log(response, " :: RESPonse from db after paymetn");
+        //         if (response.status === true) {
+        //             res.redirect(`http://localhost:3000/admin/payment-success?reference=${razorpay_payment_id}`);
+        //         }
+        //     })
+        //     .catch((err) => {
+        //         console.log(err, " :ERROR in paymentVerification");
+        //     })
 
 
     }

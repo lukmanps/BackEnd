@@ -42,16 +42,32 @@ const paymentVerification = (req, res) => __awaiter(void 0, void 0, void 0, func
         const amount = req.query.amount;
         const userId = req.query.userId;
         const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
-        (0, paymentHelper_1.updatePayment)(userId, amount)
-            .then((response) => {
-            console.log(response, " :: RESPonse from db after paymetn");
-            if (response.status === true) {
-                res.redirect(`http://localhost:3000/admin/payment-success?reference=${razorpay_payment_id}`);
-            }
-        })
-            .catch((err) => {
-            console.log(err, " :ERROR in paymentVerification");
-        });
+        if (userId !== undefined && amount !== undefined) {
+            (0, paymentHelper_1.updatePayment)(userId, amount)
+                .then((response) => {
+                console.log(response, " :: Response from db after payment");
+                if (response.status === true) {
+                    res.redirect(`http://localhost:3000/admin/payment-success?reference=${razorpay_payment_id}`);
+                }
+            })
+                .catch((err) => {
+                console.log(err, " :ERROR in paymentVerification");
+            });
+        }
+        else {
+            console.log("User ID is undefined");
+            res.redirect('http://localhost:3000/payment-error');
+        }
+        // updatePayment(userId, amount)
+        //     .then((response: any) => {
+        //         console.log(response, " :: RESPonse from db after paymetn");
+        //         if (response.status === true) {
+        //             res.redirect(`http://localhost:3000/admin/payment-success?reference=${razorpay_payment_id}`);
+        //         }
+        //     })
+        //     .catch((err) => {
+        //         console.log(err, " :ERROR in paymentVerification");
+        //     })
     }
     catch (err) {
         console.log(err, " : ERROR IN Payment ");

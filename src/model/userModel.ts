@@ -15,12 +15,15 @@ export const userSchema = new Schema({
 
     phoneNo: {
         type: String,
-        required: true
     },
 
     password: {
         type: String,
-        required: true
+    },
+
+    signInWithGoogle: {
+        type: Boolean,
+        default: false
     },
     
     status: {

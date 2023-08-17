@@ -34,6 +34,7 @@ exports.pickupCount = pickupCount;
 const dashboardInfo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const dashboardData = yield (0, dashboardHelper_1.getDashboardInfo)();
+        console.log(dashboardData, ': : Dashcboard');
         res.json(dashboardData);
     }
     catch (err) {

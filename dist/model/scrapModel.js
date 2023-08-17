@@ -14,6 +14,10 @@ exports.scrapSchema = new mongoose_1.Schema({
     price: {
         type: Number,
         required: true
+    },
+    totalQty: {
+        type: Number,
+        default: 0
     }
 });
 exports.scrapCollection = (0, mongoose_1.model)('scrap', exports.scrapSchema);

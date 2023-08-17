@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getReviews = exports.review = exports.sellScrap = void 0;
+exports.recentPickups = exports.getReviews = exports.review = exports.sellScrap = void 0;
 const userHelper_1 = require("../../helper/user/userHelper");
 const sellScrap = (req, res) => {
     const data = req.body;
@@ -42,6 +42,19 @@ const getReviews = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.getReviews = getReviews;
+const recentPickups = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = req.query.id;
+        console.log(userId, " :: User Id");
+        const pickups = yield (0, userHelper_1.getRecentPickups)(userId);
+        res.status(200).json(pickups);
+    }
+    catch (err) {
+        res.status(401);
+        console.log(err, ":: Error in recentPickups");
+    }
+});
+exports.recentPickups = recentPickups;
 exports.default = {
     sellScrap: exports.sellScrap,
     review: exports.review

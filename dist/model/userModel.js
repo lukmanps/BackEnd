@@ -13,11 +13,13 @@ exports.userSchema = new mongoose_1.Schema({
     },
     phoneNo: {
         type: String,
-        required: true
     },
     password: {
         type: String,
-        required: true
+    },
+    signInWithGoogle: {
+        type: Boolean,
+        default: false
     },
     status: {
         type: Boolean,

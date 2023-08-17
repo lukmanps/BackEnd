@@ -12,10 +12,12 @@ const userRouter = () => {
     const router = express_1.default.Router();
     router.post('/signup', userAuthController_1.userSignup);
     router.post('/login', userAuthController_1.userLogin);
-    router.get('/scrap-management', verifyUser_1.verifyUser, scrapController_1.scrapList);
+    router.post('/signin-with-google', userAuthController_1.signInWithGoogle);
+    router.get('/scrap-management', scrapController_1.scrapList);
     router.post('/sell-scrap', verifyUser_1.verifyUser, userController_1.sellScrap);
     router.post('/review', userController_1.review);
     router.get('/get-reviews', userController_1.getReviews);
+    router.get('/get-recent-pickups', verifyUser_1.verifyUser, userController_1.recentPickups);
     return router;
 };
 exports.default = userRouter;

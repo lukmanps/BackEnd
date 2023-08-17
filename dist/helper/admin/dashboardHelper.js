@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getDashboardInfo = exports.getPickupCount = exports.getCustomerCount = void 0;
 const pickupModel_1 = require("../../model/pickupModel");
+const scrapModel_1 = require("../../model/scrapModel");
 const userModel_1 = require("../../model/userModel");
 const getCustomerCount = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -36,7 +37,15 @@ const getDashboardInfo = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const pickupCount = yield pickupModel_1.pickupCollection.countDocuments({});
         const customerCount = yield userModel_1.userCollection.countDocuments({});
-        return { pickupCount, customerCount };
+        const scrapQty = yield scrapModel_1.scrapCollection.aggregate([
+            {
+                $group: {
+                    _id: '$category',
+                    totalQty: { $sum: '$totalQty' }
+                }
+            }
+        ]);
+        return { pickupCount, customerCount, scrapQty };
     }
     catch (err) {
         console.log(err, ":: Error in getDashboardInfo");

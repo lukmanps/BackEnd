@@ -5,7 +5,7 @@ import { scrapCollection } from "../../model/scrapModel";
 
 
 export const doSellScrap = (data: selectedData) => {
-    return new Promise(async(resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         let totalAmount = 0;
 
         for (const scrap of data.scrap) {
@@ -25,24 +25,33 @@ export const doSellScrap = (data: selectedData) => {
 
         pickupCollection.create(newData)
             .then((response) => {
-                resolve({response, status: true});
+                response.scrap.map(async (item) => {
+                    const scrap = await scrapCollection.findById(item.item);
+                    if(scrap){
+                        let qty = scrap?.totalQty ?? 0
+                        let quantity = item.quantity ?? 0;
+                        qty += quantity;
+                        await scrapCollection.updateOne({_id: item.item}, {$set: {totalQty: qty}})
+                    }
+                })
+                resolve({ response, status: true });
             })
             .catch((err) => {
-               reject({err, status: false});
-               console.log(err, " : ERROR in DB");
+                reject({ err, status: false });
+                console.log(err, " : ERROR in DB");
             })
     })
 }
 
-export const addReview = async(data: {id: string, review: string, value: number}) => {
-    try{
+export const addReview = async (data: { id: string, review: string, value: number }) => {
+    try {
         console.log(data, " ::DATA in addReview")
         const response = await reviewCollection.create(data);
         console.log(response, " :: Resposnse from database")
-        return {response, status: true};
+        return { response, status: true };
     } catch (err) {
         console.log(" :: ERROR in addReview", err);
-        return {err, status: false};
+        return { err, status: false };
     }
     // return new Promise((resolve, reject) => {
     //         reviewCollection.create(data)
@@ -56,8 +65,8 @@ export const addReview = async(data: {id: string, review: string, value: number}
     // })
 }
 
-export const getAllReviews = async() => {
-    try{
+export const getAllReviews = async () => {
+    try {
         const reviews = await reviewCollection.aggregate([
             {
                 $lookup: {
@@ -69,9 +78,9 @@ export const getAllReviews = async() => {
             },
             {
                 $unwind: '$user'
-            }, 
+            },
             {
-                $sort: {_id: -1}
+                $sort: { _id: -1 }
             },
             {
                 $limit: 5
@@ -85,16 +94,27 @@ export const getAllReviews = async() => {
                 }
             },
 
-            
+
         ]).exec()
         return reviews;
     }
-    catch(err){
+    catch (err) {
         console.log(err, " ::ERROR in getAllReviews");
+    }
+}
+
+export const getRecentPickups = async (userId: string) => {
+    try {
+        const pickups = await pickupCollection.find({ user: userId });
+        return pickups;
+    }
+    catch (err) {
+        console.log(err, ' :: Error in getRecentPickups')
     }
 }
 
 export default {
     doSellScrap,
-    addReview
+    addReview,
+    getRecentPickups
 }

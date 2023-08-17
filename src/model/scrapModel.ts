@@ -15,6 +15,11 @@ export const scrapSchema = new Schema({
     price: {
         type: Number,
         required: true
+    },
+
+    totalQty: {
+        type: Number,
+        default: 0
     }
 })
 

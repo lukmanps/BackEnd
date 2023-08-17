@@ -24,6 +24,7 @@ export const pickupCount = async(req: Request, res: Response) => {
 export const dashboardInfo = async(req: Request, res: Response) => {
     try{
         const dashboardData = await getDashboardInfo();
+        console.log(dashboardData, ': : Dashcboard')
         res.json(dashboardData);
     }
     catch(err){

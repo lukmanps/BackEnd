@@ -27,7 +27,7 @@ const adminDoLogin = (data) => {
                         email: admin.email,
                         username: admin.username
                     };
-                    let adminAccessToken = jsonwebtoken_1.default.sign(adminInfo, process.env.JWT_key, { expiresIn: 3600 });
+                    let adminAccessToken = jsonwebtoken_1.default.sign(adminInfo, process.env.JWT_key, { expiresIn: '1d' });
                     resolve({ adminInfo, adminAccessToken });
                 }
                 else {
