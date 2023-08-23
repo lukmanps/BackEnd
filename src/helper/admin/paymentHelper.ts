@@ -1,17 +1,20 @@
 import { userCollection } from "../../model/userModel"
 
-export const updatePayment = (id:string, amount: number) => {
-    return new Promise (async(resolve, reject) => {
+
+//To update the user's wallet after payment.
+export const updatePayment = (id: string, amount: number) => {
+    return new Promise(async (resolve, reject) => {
         const user: any = await userCollection.findById(id);
-        let walletAmount = user?.wallet 
-        userCollection.findByIdAndUpdate(id, {wallet: walletAmount+amount})
-        .then((response) => {
-            resolve({status: true});
-        })
-        .catch((err) => {
-            console.log(err, " : ERROR in update Payment");
-            reject({status: false});
-        })
+        if (!user) {
+            return reject({ status: false, message: 'user not found' })
+        }
+        const walletAmount = user.wallet;
+        const newWallet = walletAmount + amount;
+
+        console.log(newWallet, ':: Update wallet amount ');
+        await userCollection.updateOne({ _id: id }, { $set: { wallet: newWallet } });
+        resolve({ status: true });
+
     })
 }
 

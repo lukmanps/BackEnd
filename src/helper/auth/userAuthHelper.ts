@@ -56,7 +56,8 @@ export const doLogin = async (data: { email: string, password: string }) => {
                         email: user.email,
                         username: user.username,
                         phoneNo: user.phoneNo,
-                        status: user.status
+                        status: user.status,
+                        wallet: user.wallet
                     };
                     const token = jwt.sign(userData, process.env.JWT_KEY!, { expiresIn: '1d' });
                     return { userData, token };
@@ -111,6 +112,7 @@ export const doSignInWithGoogle = (data: any) => {
                     id: user._id,
                     username: user.username,
                     email: user.email,
+                    wallet: user.wallet,
                     status: user.status
                 }
                 //JWT Token

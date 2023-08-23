@@ -19,6 +19,7 @@ export const addScrapMaterial = (req: Request, res: Response) => {
 export const scrapList = (req: Request, res: Response) => {
     getAllScrap()
     .then((response)=> {
+        console.log(response, ' Scrap List from DB');
         res.json(response);
     })
     .catch((err)=>[

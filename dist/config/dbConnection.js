@@ -17,7 +17,7 @@ require('dotenv').config();
 function connectDB() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            yield mongoose_1.default.connect(process.env.DB_LINK);
+            yield mongoose_1.default.connect(process.env.DB_URL);
             console.log('***** Database Connected *****');
         }
         catch (err) {

@@ -14,12 +14,12 @@ const adminRouter = () => {
 
     //Customer Management
     router.get('/user-management', verifyAdmin, customersList);
-    router.patch('/change-status', changeUserStatus);
+    router.patch('/change-status',verifyAdmin, changeUserStatus);
     router.get('/view-user', verifyAdmin, userData);
     router.delete('/delete-user', deleteUser);
 
     //Scrap Management
-    router.post('/add-scrap', addScrapMaterial);
+    router.post('/add-scrap',verifyAdmin, addScrapMaterial);
     router.get('/scrap-management',verifyAdmin, scrapList)
 
     //Pickup Details
@@ -30,8 +30,8 @@ const adminRouter = () => {
 
     //Payment
     router.get('/get-key', getKey);
-    router.post('/payment', payment);
-    router.post('/payment-verification', paymentVerification);
+    router.post('/payment',verifyAdmin, payment);
+    router.post('/payment-verification',verifyAdmin, paymentVerification);
 
     //Dashboard
     router.get('/get-customer-count', customerCount);

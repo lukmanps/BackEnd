@@ -26,6 +26,11 @@ const getAllPickups = () => {
                     'status': 1,
                     'formData.locality': 1
                 }
+            },
+            {
+                $sort: {
+                    'date': -1
+                }
             }
         ])
             .then((response) => {

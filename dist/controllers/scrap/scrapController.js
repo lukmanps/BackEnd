@@ -16,6 +16,7 @@ exports.addScrapMaterial = addScrapMaterial;
 const scrapList = (req, res) => {
     (0, scrapHelper_1.getAllScrap)()
         .then((response) => {
+        console.log(response, ' Scrap List from DB');
         res.json(response);
     })
         .catch((err) => [

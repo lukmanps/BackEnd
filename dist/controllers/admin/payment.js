@@ -21,7 +21,7 @@ const payment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const amount = req.body.amount;
         console.log(amount, "PAYMENT Called");
         const options = {
-            amount: amount,
+            amount: amount * 100,
             currency: "INR",
             receipt: "order_rcptid_11"
         };
@@ -58,16 +58,6 @@ const paymentVerification = (req, res) => __awaiter(void 0, void 0, void 0, func
             console.log("User ID is undefined");
             res.redirect('http://localhost:3000/payment-error');
         }
-        // updatePayment(userId, amount)
-        //     .then((response: any) => {
-        //         console.log(response, " :: RESPonse from db after paymetn");
-        //         if (response.status === true) {
-        //             res.redirect(`http://localhost:3000/admin/payment-success?reference=${razorpay_payment_id}`);
-        //         }
-        //     })
-        //     .catch((err) => {
-        //         console.log(err, " :ERROR in paymentVerification");
-        //     })
     }
     catch (err) {
         console.log(err, " : ERROR IN Payment ");

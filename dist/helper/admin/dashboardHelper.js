@@ -37,6 +37,14 @@ const getDashboardInfo = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const pickupCount = yield pickupModel_1.pickupCollection.countDocuments({});
         const customerCount = yield userModel_1.userCollection.countDocuments({});
+        const totalAmountPaid = yield userModel_1.userCollection.aggregate([
+            {
+                $group: {
+                    _id: null,
+                    totalAmountPaid: { $sum: '$wallet' }
+                }
+            }
+        ]);
         const scrapQty = yield scrapModel_1.scrapCollection.aggregate([
             {
                 $group: {
@@ -45,7 +53,8 @@ const getDashboardInfo = () => __awaiter(void 0, void 0, void 0, function* () {
                 }
             }
         ]);
-        return { pickupCount, customerCount, scrapQty };
+        const totalPaid = totalAmountPaid.map((item) => item.totalAmountPaid)[0];
+        return { pickupCount, customerCount, scrapQty, totalPaid };
     }
     catch (err) {
         console.log(err, ":: Error in getDashboardInfo");

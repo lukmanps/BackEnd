@@ -11,18 +11,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updatePayment = void 0;
 const userModel_1 = require("../../model/userModel");
+//To update the user's wallet after payment.
 const updatePayment = (id, amount) => {
     return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
         const user = yield userModel_1.userCollection.findById(id);
-        let walletAmount = user === null || user === void 0 ? void 0 : user.wallet;
-        userModel_1.userCollection.findByIdAndUpdate(id, { wallet: walletAmount + amount })
-            .then((response) => {
-            resolve({ status: true });
-        })
-            .catch((err) => {
-            console.log(err, " : ERROR in update Payment");
-            reject({ status: false });
-        });
+        if (!user) {
+            return reject({ status: false, message: 'user not found' });
+        }
+        const walletAmount = user.wallet;
+        const newWallet = walletAmount + amount;
+        console.log(newWallet, ':: Update wallet amount ');
+        yield userModel_1.userCollection.updateOne({ _id: id }, { $set: { wallet: newWallet } });
+        resolve({ status: true });
     }));
 };
 exports.updatePayment = updatePayment;
