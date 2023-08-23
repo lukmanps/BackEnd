@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: false }))
 
 app.use(cors());
 
-const PORT: number = 8000
+const PORT: number = 3000
 app.listen(PORT, ()=>{
     console.log(`:::::::::: Server Running on PORT ${PORT} ::::::::::`)
 })
