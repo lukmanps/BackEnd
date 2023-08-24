@@ -1,6 +1,8 @@
 import { Secret } from "jsonwebtoken"
 import { adminCollection } from "../../model/adminModel";
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
+require('dotenv').config();
+
 
 export const adminDoLogin = (data: { email: string, password: string }) => {
     return new Promise(async (resolve, reject) => {
@@ -13,7 +15,8 @@ export const adminDoLogin = (data: { email: string, password: string }) => {
                     let adminInfo = {
                         id: admin._id,
                         email: admin.email,
-                        username: admin.username
+                        username: admin.username,
+                        admin: true,
                     }
                     let adminAccessToken = jwt.sign(adminInfo, process.env.JWT_key as Secret, {expiresIn: '1d'});
                     resolve({ adminInfo, adminAccessToken })

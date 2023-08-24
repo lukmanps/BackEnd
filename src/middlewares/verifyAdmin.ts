@@ -10,13 +10,17 @@ export const verifyAdmin = (req: Request, res: Response, next: NextFunction) => 
             return res.status(401).json({message: 'Unauthorized request. Token not found!'})
         }
 
-        const verifiedAdmin = jwt.verify(token, process.env.JWT_KEY as Secret);
+        const verifiedAdmin:any = jwt.verify(token, process.env.JWT_KEY as Secret, (err, admin: any) => {
+            if(admin.admin === true){
+                next();
+            } else{
+                return res.status(401).json({message: 'Unauthorized request. Invalid Token'});
+            }
+        });
 
         if(!verifiedAdmin) {
             return res.status(401).json({message: 'Unauthorized request. Invalid Token'});
         }
-
-        next();
     }
     catch(err){
         return res.status(401).json({message: 'Unauthorized request. Token Verification failed'});
