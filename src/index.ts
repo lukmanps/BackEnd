@@ -14,12 +14,18 @@ app.use(express.json())
 app.use(logger('dev'))
 app.use(express.urlencoded({ extended: false }))
 
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'https://scrap-stock.web.app');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+});
 
 
 app.use(cors());
 
 const PORT: number = 3000
-app.listen(PORT, ()=>{
+app.listen(PORT, () => {
     console.log(`:::::::::: Server Running on PORT ${PORT} ::::::::::`)
 })
 
