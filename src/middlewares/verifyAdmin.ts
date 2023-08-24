@@ -21,6 +21,8 @@ export const verifyAdmin = (req: Request, res: Response, next: NextFunction) => 
         if(!verifiedAdmin) {
             return res.status(401).json({message: 'Unauthorized request. Invalid Token'});
         }
+        
+        next();
     }
     catch(err){
         return res.status(401).json({message: 'Unauthorized request. Token Verification failed'});
