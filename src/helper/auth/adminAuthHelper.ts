@@ -3,7 +3,9 @@ import { adminCollection } from "../../model/adminModel";
 import jwt from 'jsonwebtoken';
 require('dotenv').config();
 
-console.log(process.env.JWT_key);
+console.log(process.env.JWT_KEY, 'JWT secret key');
+
+const JWT_KEY = 'ba15b0bb9a658c14b1fcf50dadde13d23a6753bc1085f7f6b60364a7c8428f93';
 
 
 export const adminDoLogin = async (data: { email: string, password: string }) => {
@@ -23,7 +25,7 @@ export const adminDoLogin = async (data: { email: string, password: string }) =>
                 };
                 
                 // Use a hashed JWT secret from process.env.JWT_key
-                let adminAccessToken = await jwt.sign(adminInfo, process.env.JWT_key as Secret, { expiresIn: '1d' });
+                let adminAccessToken = await jwt.sign(adminInfo, JWT_KEY as Secret, { expiresIn: '1d' });
                 
                 return { status: true, adminInfo, adminAccessToken };
             } else {
