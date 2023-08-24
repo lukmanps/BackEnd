@@ -14,11 +14,17 @@ const verifyAdmin = (req, res, next) => {
         if (token === null || !token) {
             return res.status(401).json({ message: 'Unauthorized request. Token not found!' });
         }
-        const verifiedAdmin = jsonwebtoken_1.default.verify(token, process.env.JWT_KEY);
+        const verifiedAdmin = jsonwebtoken_1.default.verify(token, process.env.JWT_KEY, (err, admin) => {
+            if (admin.admin === true) {
+                next();
+            }
+            else {
+                return res.status(401).json({ message: 'Unauthorized request. Invalid Token' });
+            }
+        });
         if (!verifiedAdmin) {
             return res.status(401).json({ message: 'Unauthorized request. Invalid Token' });
         }
-        next();
     }
     catch (err) {
         return res.status(401).json({ message: 'Unauthorized request. Token Verification failed' });
