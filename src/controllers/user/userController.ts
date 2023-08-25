@@ -27,7 +27,7 @@ export const sellScrap = (req: Request, res: Response) => {
 
     doSellScrap(data)
         .then((response: any) => {
-            res.json(response.status);
+            res.json(response);
         })
         .catch((response: any) => {
             res.json(response.status);

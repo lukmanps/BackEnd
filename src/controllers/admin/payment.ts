@@ -43,7 +43,7 @@ export const paymentVerification = async (req: Request, res: Response) => {
                 .then((response: any) => {
                     console.log(response, " :: Response from db after payment");
                     if (response.status === true) {
-                        res.redirect(`http://localhost:3000/admin/payment-success?reference=${razorpay_payment_id}`);
+                        res.redirect(`https://scrap-stock.web.app/admin/payment-success?reference=${razorpay_payment_id}`);
                     }
                 })
                 .catch((err) => {
@@ -51,7 +51,7 @@ export const paymentVerification = async (req: Request, res: Response) => {
                 });
         } else {
             console.log("User ID is undefined");
-            res.redirect('http://localhost:3000/payment-error');
+            res.redirect('https://scrap-stock.web.app/payment-error');
         }
         
 
@@ -59,7 +59,7 @@ export const paymentVerification = async (req: Request, res: Response) => {
     }
     catch (err) {
         console.log(err, " : ERROR IN Payment ");
-        res.redirect('http://localhost:3000/payment-error');
+        res.redirect('https://scrap-stock.web.app/payment-error');
     }
 
 }
