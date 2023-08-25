@@ -26,12 +26,12 @@ const adminRouter = () => {
     router.get('/pickups', verifyAdmin, pickupsList);
     router.get('/pickup-details', verifyAdmin, pickupDetails);  
     router.get('/get-selected-scraps', verifyAdmin, selectedScraps); 
-    router.patch('/pickup-details', changePickupStatus); //Update Pickup Status;
+    router.patch('/pickup-details',verifyAdmin, changePickupStatus); //Update Pickup Status;
 
     //Payment
     router.get('/get-key', getKey);
     router.post('/payment',verifyAdmin, payment);
-    router.post('/payment-verification',verifyAdmin, paymentVerification);
+    router.post('/payment-verification', paymentVerification);
 
     //Dashboard
     router.get('/get-customer-count', customerCount);

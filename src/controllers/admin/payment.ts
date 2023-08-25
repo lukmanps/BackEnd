@@ -39,7 +39,8 @@ export const paymentVerification = async (req: Request, res: Response) => {
         const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
 
         if (userId !== undefined && amount !== undefined) {
-            updatePayment(userId, amount)
+            const updateAmount = amount/100;
+            updatePayment(userId, updateAmount)
                 .then((response: any) => {
                     console.log(response, " :: Response from db after payment");
                     if (response.status === true) {
