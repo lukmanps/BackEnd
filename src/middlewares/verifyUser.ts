@@ -25,7 +25,7 @@ export const verifyUser = (req: Request, res: Response, next: NextFunction) => {
                 } else {
                     return res.status(401).json({ message: 'Unauthorized request. User is Blocked!.' });
                 }
-            }else {
+            } else {
                 return res.status(401).json({ message: 'Unauthorized request. Please try again later!.' });
             }
         });
