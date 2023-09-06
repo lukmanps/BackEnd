@@ -9,10 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getRecentPickups = exports.getAllReviews = exports.addReview = exports.doSellScrap = void 0;
+exports.doUpdateUserDetails = exports.doUpdateProfilePicture = exports.getRecentPickups = exports.getAllReviews = exports.addReview = exports.doSellScrap = void 0;
 const pickupModel_1 = require("../../model/pickupModel");
 const reviewModel_1 = require("../../model/reviewModel");
 const scrapModel_1 = require("../../model/scrapModel");
+const userModel_1 = require("../../model/userModel");
 const doSellScrap = (data) => {
     return new Promise((resolve, reject) => __awaiter(void 0, void 0, void 0, function* () {
         let totalAmount = 0;
@@ -117,8 +118,37 @@ const getRecentPickups = (userId) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.getRecentPickups = getRecentPickups;
+const doUpdateProfilePicture = (data) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        console.log(data, "datain do update");
+        const updatedUser = yield userModel_1.userCollection.findByIdAndUpdate(data.id, { profilePicture: data.dp }, { new: true } // Add this option to return the updated document
+        );
+        console.log(updatedUser, ":: Updated profile picture");
+        return updatedUser;
+    }
+    catch (err) {
+        console.log(err, " : error in doUpdateProfilePicture");
+        return { status: false };
+    }
+});
+exports.doUpdateProfilePicture = doUpdateProfilePicture;
+const doUpdateUserDetails = (data) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const updatedUser = yield userModel_1.userCollection.findOneAndUpdate({ _id: data.id }, // Filter criteria
+        { $set: { username: data.username, phoneNo: data.phoneNo } }, // Update object with $set operator
+        { new: true } // Option to return the updated document
+        );
+        return updatedUser;
+    }
+    catch (err) {
+        console.log(err, ":: Error in doUpdateUserDetails");
+        return { status: false };
+    }
+});
+exports.doUpdateUserDetails = doUpdateUserDetails;
 exports.default = {
     doSellScrap: exports.doSellScrap,
     addReview: exports.addReview,
-    getRecentPickups: exports.getRecentPickups
+    getRecentPickups: exports.getRecentPickups,
+    doUpdateProfilePicture: exports.doUpdateProfilePicture
 };

@@ -5,7 +5,6 @@ export const userSchema = new Schema({
     username: {
         type: String,
         required: true
-
     },
 
     email: {
@@ -13,13 +12,9 @@ export const userSchema = new Schema({
         required: true
     },
 
-    phoneNo: {
-        type: String,
-    },
+    phoneNo: String,
 
-    password: {
-        type: String,
-    },
+    password: String,
 
     signInWithGoogle: {
         type: Boolean,
@@ -34,7 +29,9 @@ export const userSchema = new Schema({
     wallet: {
         type: Number,
         default: 0
-    }
+    },
+
+    profilePicture: String
 });
 
 export const userCollection = model('user', userSchema);

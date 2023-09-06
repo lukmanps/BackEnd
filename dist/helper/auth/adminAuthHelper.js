@@ -16,7 +16,8 @@ exports.adminDoLogin = void 0;
 const adminModel_1 = require("../../model/adminModel");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 require('dotenv').config();
-console.log(process.env.JWT_key);
+console.log(process.env.JWT_KEY, 'JWT secret key');
+const JWT_KEY = 'ba15b0bb9a658c14b1fcf50dadde13d23a6753bc1085f7f6b60364a7c8428f93';
 const adminDoLogin = (data) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         console.log(data, ': Data in adminDoLogin');
@@ -31,7 +32,7 @@ const adminDoLogin = (data) => __awaiter(void 0, void 0, void 0, function* () {
                     admin: true,
                 };
                 // Use a hashed JWT secret from process.env.JWT_key
-                let adminAccessToken = yield jsonwebtoken_1.default.sign(adminInfo, process.env.JWT_key, { expiresIn: '1d' });
+                let adminAccessToken = yield jsonwebtoken_1.default.sign(adminInfo, JWT_KEY, { expiresIn: '1d' });
                 return { status: true, adminInfo, adminAccessToken };
             }
             else {

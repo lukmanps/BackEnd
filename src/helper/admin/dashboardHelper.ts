@@ -34,6 +34,7 @@ export const getDashboardInfo = async () => {
                 }
             }
         ])
+        
         const scrapQty = await scrapCollection.aggregate([
             {
                 $group: {

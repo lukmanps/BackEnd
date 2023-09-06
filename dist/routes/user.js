@@ -18,6 +18,8 @@ const userRouter = () => {
     router.post('/review', userController_1.review);
     router.get('/get-reviews', userController_1.getReviews);
     router.get('/get-recent-pickups', verifyUser_1.verifyUser, userController_1.recentPickups);
+    router.post('/update-profile-picture', userController_1.updateProfilePicture);
+    router.post('/update-user-profile', userController_1.updateUserDetails);
     return router;
 };
 exports.default = userRouter;

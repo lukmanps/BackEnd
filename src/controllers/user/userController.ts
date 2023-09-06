@@ -1,5 +1,5 @@
 import { Request, Response, response } from "express";
-import { doSellScrap, addReview, getAllReviews, getRecentPickups } from "../../helper/user/userHelper";
+import { doSellScrap, addReview, getAllReviews, getRecentPickups, doUpdateProfilePicture, doUpdateUserDetails } from "../../helper/user/userHelper";
 
 export interface selectedData {
     userId: string,
@@ -67,8 +67,40 @@ export const recentPickups = async(req: Request, res: Response) => {
     }
 }
 
+export const updateProfilePicture = async (req: Request, res: Response) => {
+    try{
+        const profileUpdated:any = await doUpdateProfilePicture(req.body);
+        console.log(profileUpdated, 'updated data of profiel picuter');
+        if(profileUpdated.status === false){
+            res.status(401).json({status: false});
+        } else{
+            res.status(200).json({profileUpdated});
+        }
+    }
+    catch(err){
+        console.log(err, " :: error while updating profile picture");
+    }
+}
+
+export const updateUserDetails = async(req: Request, res: Response) => {
+    try{
+        const detailsUpdated: any = await doUpdateUserDetails(req.body);
+        if(detailsUpdated.status === false){
+            res.status(401).json({status: false});
+        }else {
+            console.log(detailsUpdated, " : Response from DB");
+            res.status(200).json({detailsUpdated});
+        }
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+
 
 export default {
     sellScrap,
-    review
+    review,
+    updateProfilePicture,
+    updateUserDetails
 }

@@ -2,6 +2,7 @@ import { review, selectedData } from "../../controllers/user/userController"
 import { pickupCollection } from "../../model/pickupModel"
 import { reviewCollection } from "../../model/reviewModel";
 import { scrapCollection } from "../../model/scrapModel";
+import { userCollection } from "../../model/userModel";
 
 
 export const doSellScrap = (data: selectedData) => {
@@ -27,11 +28,11 @@ export const doSellScrap = (data: selectedData) => {
             .then((response) => {
                 response.scrap.map(async (item) => {
                     const scrap = await scrapCollection.findById(item.item);
-                    if(scrap){
+                    if (scrap) {
                         let qty = scrap?.totalQty ?? 0
                         let quantity = item.quantity ?? 0;
                         qty += quantity;
-                        await scrapCollection.updateOne({_id: item.item}, {$set: {totalQty: qty}})
+                        await scrapCollection.updateOne({ _id: item.item }, { $set: { totalQty: qty } })
                     }
                 })
                 resolve({ response, status: true });
@@ -113,8 +114,41 @@ export const getRecentPickups = async (userId: string) => {
     }
 }
 
+export const doUpdateProfilePicture = async (data: { id: string, dp: string }) => {
+    try {
+        console.log(data, "datain do update");
+        const updatedUser = await userCollection.findByIdAndUpdate(
+            data.id,
+            { profilePicture: data.dp },
+            { new: true } // Add this option to return the updated document
+        );
+        console.log(updatedUser, ":: Updated profile picture");
+        return updatedUser;
+    } catch (err) {
+        console.log(err, " : error in doUpdateProfilePicture");
+        return { status: false };
+    }
+}
+
+export const doUpdateUserDetails = async (data: { id: string, username: string, phoneNo: string }) => {
+    try {
+        const updatedUser = await userCollection.findOneAndUpdate(
+            { _id: data.id }, // Filter criteria
+            { $set: { username: data.username, phoneNo: data.phoneNo } }, // Update object with $set operator
+            { new: true } // Option to return the updated document
+        );
+        return updatedUser;
+
+    } catch (err) {
+        console.log(err, ":: Error in doUpdateUserDetails");
+        return { status: false };
+    }
+}
+
+
 export default {
     doSellScrap,
     addReview,
-    getRecentPickups
+    getRecentPickups,
+    doUpdateProfilePicture
 }

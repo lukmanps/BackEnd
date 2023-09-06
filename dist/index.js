@@ -14,13 +14,13 @@ const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, morgan_1.default)('dev'));
 app.use(express_1.default.urlencoded({ extended: false }));
+app.use((0, cors_1.default)());
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'https://scrap-stock.web.app/');
+    res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
 });
-app.use((0, cors_1.default)());
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`:::::::::: Server Running on PORT ${PORT} ::::::::::`);

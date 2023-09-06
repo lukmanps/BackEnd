@@ -1,7 +1,7 @@
 import express from "express";
 import {userSignup, userLogin, signInWithGoogle} from "../controllers/auth/userAuthController";
 import { scrapList } from "../controllers/scrap/scrapController";
-import { sellScrap, review, getReviews, recentPickups } from "../controllers/user/userController";
+import { sellScrap, review, getReviews, recentPickups, updateProfilePicture, updateUserDetails } from "../controllers/user/userController";
 import { verifyUser } from "../middlewares/verifyUser";
 
 const userRouter = () => {
@@ -18,6 +18,9 @@ const userRouter = () => {
     router.get('/get-reviews', getReviews);
 
     router.get('/get-recent-pickups',verifyUser, recentPickups);
+
+    router.post('/update-profile-picture', updateProfilePicture);
+    router.post('/update-user-profile', updateUserDetails)
     
      
     return router

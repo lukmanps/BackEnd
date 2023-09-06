@@ -18,11 +18,11 @@ export const doRegister = (data: userDetails) => {
 
             userCollection.create(data).then((newUser) => {
                 let userData = {
-                    id: newUser._id,
+                    _id: newUser._id,
                     username: newUser.username,
                     email: newUser.email,
                     phoneNo: newUser.phoneNo,
-                    status: newUser.status
+                    status: newUser.status,
                 }
 
                 //JWT Authentication
@@ -52,11 +52,12 @@ export const doLogin = async (data: { email: string, password: string }) => {
                 const verifyPassword = await bcrypt.compare(data.password, user.password!);
                 if (verifyPassword) {
                     const userData = {
-                        id: user._id,
+                        _id: user._id,
                         email: user.email,
                         username: user.username,
                         phoneNo: user.phoneNo,
                         status: user.status,
+                        profilePicture: user.profilePicture,
                         wallet: user.wallet
                     };
                     const token = jwt.sign(userData, process.env.JWT_KEY!, { expiresIn: '1d' });

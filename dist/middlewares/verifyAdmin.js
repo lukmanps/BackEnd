@@ -11,20 +11,18 @@ const verifyAdmin = (req, res, next) => {
     const token = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(' ')[1];
     console.log(token, " :: Token in middleware");
     try {
-        if (token === null || !token) {
+        if (!token) {
             return res.status(401).json({ message: 'Unauthorized request. Token not found!' });
         }
-        const verifiedAdmin = jsonwebtoken_1.default.verify(token, process.env.JWT_KEY, (err, admin) => {
-            if (admin.admin === true) {
-                next();
-            }
-            else {
+        jsonwebtoken_1.default.verify(token, process.env.JWT_KEY, (err, admin) => {
+            if (err) {
                 return res.status(401).json({ message: 'Unauthorized request. Invalid Token' });
             }
+            // Admin is verified, you can attach admin data to the request if needed
+            if (admin) {
+                next();
+            }
         });
-        if (!verifiedAdmin) {
-            return res.status(401).json({ message: 'Unauthorized request. Invalid Token' });
-        }
     }
     catch (err) {
         return res.status(401).json({ message: 'Unauthorized request. Token Verification failed' });

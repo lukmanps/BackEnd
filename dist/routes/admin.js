@@ -17,7 +17,7 @@ const adminRouter = () => {
     //Customer Management
     router.get('/user-management', verifyAdmin_1.verifyAdmin, adminController_1.customersList);
     router.patch('/change-status', verifyAdmin_1.verifyAdmin, adminController_1.changeUserStatus);
-    router.get('/view-user', verifyAdmin_1.verifyAdmin, adminController_1.userData);
+    router.get('/view-user', adminController_1.userData);
     router.delete('/delete-user', adminController_1.deleteUser);
     //Scrap Management
     router.post('/add-scrap', verifyAdmin_1.verifyAdmin, scrapController_1.addScrapMaterial);
@@ -26,11 +26,11 @@ const adminRouter = () => {
     router.get('/pickups', verifyAdmin_1.verifyAdmin, pickupController_1.pickupsList);
     router.get('/pickup-details', verifyAdmin_1.verifyAdmin, pickupController_1.pickupDetails);
     router.get('/get-selected-scraps', verifyAdmin_1.verifyAdmin, pickupController_1.selectedScraps);
-    router.patch('/pickup-details', pickupController_1.changePickupStatus); //Update Pickup Status;
+    router.patch('/pickup-details', verifyAdmin_1.verifyAdmin, pickupController_1.changePickupStatus); //Update Pickup Status;
     //Payment
     router.get('/get-key', payment_1.getKey);
     router.post('/payment', verifyAdmin_1.verifyAdmin, payment_1.payment);
-    router.post('/payment-verification', verifyAdmin_1.verifyAdmin, payment_1.paymentVerification);
+    router.post('/payment-verification', payment_1.paymentVerification);
     //Dashboard
     router.get('/get-customer-count', dashboardController_1.customerCount);
     router.get('/get-pickup-count', dashboardController_1.pickupCount);

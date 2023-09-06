@@ -50,7 +50,8 @@ export const userLogin = (req: Request, res: Response) => {
 export const signInWithGoogle = (req: Request, res: Response) => {
     const userData = {
         username: req.body?.displayName,
-        email: req.body?.email
+        email: req.body?.email,
+        profilePicture: req.body?.photoURL
     }
     doSignInWithGoogle(userData)
     .then((response)=>{

@@ -38,10 +38,11 @@ const userLogin = (req, res) => {
 };
 exports.userLogin = userLogin;
 const signInWithGoogle = (req, res) => {
-    var _a, _b;
+    var _a, _b, _c;
     const userData = {
         username: (_a = req.body) === null || _a === void 0 ? void 0 : _a.displayName,
-        email: (_b = req.body) === null || _b === void 0 ? void 0 : _b.email
+        email: (_b = req.body) === null || _b === void 0 ? void 0 : _b.email,
+        profilePicture: (_c = req.body) === null || _c === void 0 ? void 0 : _c.photoURL
     };
     (0, userAuthHelper_1.doSignInWithGoogle)(userData)
         .then((response) => {

@@ -15,7 +15,7 @@ const adminRouter = () => {
     //Customer Management
     router.get('/user-management', verifyAdmin, customersList);
     router.patch('/change-status',verifyAdmin, changeUserStatus);
-    router.get('/view-user', verifyAdmin, userData);
+    router.get('/view-user', userData);
     router.delete('/delete-user', deleteUser);
 
     //Scrap Management

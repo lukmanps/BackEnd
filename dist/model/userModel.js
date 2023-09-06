@@ -11,12 +11,8 @@ exports.userSchema = new mongoose_1.Schema({
         type: String,
         required: true
     },
-    phoneNo: {
-        type: String,
-    },
-    password: {
-        type: String,
-    },
+    phoneNo: String,
+    password: String,
     signInWithGoogle: {
         type: Boolean,
         default: false
@@ -28,6 +24,7 @@ exports.userSchema = new mongoose_1.Schema({
     wallet: {
         type: Number,
         default: 0
-    }
+    },
+    profilePicture: String
 });
 exports.userCollection = (0, mongoose_1.model)('user', exports.userSchema);
