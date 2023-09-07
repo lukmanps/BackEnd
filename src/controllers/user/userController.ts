@@ -59,6 +59,7 @@ export const recentPickups = async(req: Request, res: Response) => {
         const userId = req.query.id as string;
         console.log(userId, " :: User Id");
         const pickups = await getRecentPickups(userId);
+        console.log(pickups, 'PIckups from db');
         res.status(200).json(pickups);
     }
     catch (err) {

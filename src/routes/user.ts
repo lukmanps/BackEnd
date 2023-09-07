@@ -17,7 +17,7 @@ const userRouter = () => {
     router.post('/review', review);
     router.get('/get-reviews', getReviews);
 
-    router.get('/get-recent-pickups',verifyUser, recentPickups);
+    router.get('/get-recent-pickups', recentPickups);
 
     router.post('/update-profile-picture', updateProfilePicture);
     router.post('/update-user-profile', updateUserDetails)

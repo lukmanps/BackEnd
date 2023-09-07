@@ -47,6 +47,7 @@ const recentPickups = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         const userId = req.query.id;
         console.log(userId, " :: User Id");
         const pickups = yield (0, userHelper_1.getRecentPickups)(userId);
+        console.log(pickups, 'PIckups from db');
         res.status(200).json(pickups);
     }
     catch (err) {
